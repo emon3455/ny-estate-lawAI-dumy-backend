@@ -53,7 +53,7 @@ async def get_message_from_whatsapp_sms(request: MessageRequest):
     }
 
     if(request.modality=="Whatsapp"):
-      webhook_url = "https://services.leadconnectorhq.com/hooks/HdpmQEFcOyjCw9DFaIyF/webhook-trigger/92ccddf1-5a24-42c1-8747-f7355d9a9bfc"
+      webhook_url = "https://services.leadconnectorhq.com/hooks/HdpmQEFcOyjCw9DFaIyF/webhook-trigger/9a029568-6db2-4a58-a5b5-d6fdd3e26bf8"
       response = requests.post(webhook_url, json=post_data)
       if response.status_code == 200:
         return JSONResponse(content={"status": "whatsapp message sent successfully!"})
@@ -62,7 +62,7 @@ async def get_message_from_whatsapp_sms(request: MessageRequest):
 
 
     elif(request.modality=="SMS"):
-      webhook_url = "https://services.leadconnectorhq.com/hooks/HdpmQEFcOyjCw9DFaIyF/webhook-trigger/92ccddf1-5a24-42c1-8747-f7355d9a9bfc"
+      webhook_url = "https://services.leadconnectorhq.com/hooks/HdpmQEFcOyjCw9DFaIyF/webhook-trigger/4f73a1ec-239a-499e-849e-44a8a6dd6ded"
       response = requests.post(webhook_url, json=post_data)
       if response.status_code == 200:
         return JSONResponse(content={"status": "sms sent successfully!"})
