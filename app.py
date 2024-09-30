@@ -70,6 +70,6 @@ async def get_message_from_whatsapp_sms(request: MessageRequest):
         raise HTTPException(status_code=response.status_code, detail="Failed to send sms")
 
 
-if __name__ == "__main__":
-    import uvicorn
-    uvicorn.run(app, host="127.0.0.1", port=8000)
+# if __name__ == "__main__":
+#     import uvicorn
+#     uvicorn.run(app, host="127.0.0.1", port=8000)
