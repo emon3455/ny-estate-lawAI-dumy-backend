@@ -1,5 +1,4 @@
 import requests
-
 from fastapi import FastAPI, Request, HTTPException
 from fastapi.responses import JSONResponse
 from fastapi.middleware.cors import CORSMiddleware
@@ -20,8 +19,8 @@ class MessageRequest(BaseModel):
     lastName: str
     email: str
     phone: str
-    message: str
-    sessionID: str
+    smsBody: str
+    sessionId: str
     modality: str
 
 def getChatbotMessage(inputText: str):
@@ -33,23 +32,21 @@ async def home():
 
 @app.post("/testBody")
 async def get_body(request: Request):
-
     body = await request.json()
-
     return JSONResponse(content=body)
 
 @app.post("/message")
 async def get_message_from_whatsapp_sms(request: MessageRequest):
 
-    chatbot_reply = getChatbotMessage(request.message)
+    chatbot_reply = getChatbotMessage(request.smsBody)
 
     post_data = {
         "firstName": request.firstName,
         "lastName": request.lastName,
         "phone": request.phone,
         "email": request.email,
-        "message": chatbot_reply,
-        "sessionID": request.sessionID,
+        "smsBody": chatbot_reply,
+        "sessionId": request.sessionId,
         "modality": request.modality,
     }
 
