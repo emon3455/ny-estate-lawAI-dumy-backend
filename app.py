@@ -26,6 +26,6 @@ async def get_message_from_whatsapp_sms(request: Request):
 
     return JSONResponse(content={"body": body})
 
-if __name__ == "__main__":
-    import uvicorn
-    uvicorn.run(app, host="0.0.0.0", port=8000)
+# if __name__ == "__main__":
+#     import uvicorn
+#     uvicorn.run(app, host="0.0.0.0", port=8000)
