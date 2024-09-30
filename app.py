@@ -1,8 +1,9 @@
+import requests
+
 from fastapi import FastAPI, Request, HTTPException
 from fastapi.responses import JSONResponse
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
-import requests
 
 app = FastAPI()
 
@@ -37,37 +38,37 @@ async def get_body(request: Request):
 
     return JSONResponse(content=body)
 
-@app.post("/message")
-async def get_message_from_whatsapp_sms(request: MessageRequest):
+# @app.post("/message")
+# async def get_message_from_whatsapp_sms(request: MessageRequest):
 
-    chatbot_reply = getChatbotMessage(request.message)
+#     chatbot_reply = getChatbotMessage(request.message)
 
-    post_data = {
-        "firstName": request.firstName,
-        "lastName": request.lastName,
-        "phone": request.phone,
-        "email": request.email,
-        "message": chatbot_reply,
-        "sessionID": request.sessionID,
-        "modality": request.modality,
-    }
+#     post_data = {
+#         "firstName": request.firstName,
+#         "lastName": request.lastName,
+#         "phone": request.phone,
+#         "email": request.email,
+#         "message": chatbot_reply,
+#         "sessionID": request.sessionID,
+#         "modality": request.modality,
+#     }
 
-    if(request.modality=="Whatsapp"):
-      webhook_url = "https://services.leadconnectorhq.com/hooks/HdpmQEFcOyjCw9DFaIyF/webhook-trigger/9a029568-6db2-4a58-a5b5-d6fdd3e26bf8"
-      response = requests.post(webhook_url, json=post_data)
-      if response.status_code == 200:
-        return JSONResponse(content={"status": "whatsapp message sent successfully!"})
-      else:
-        raise HTTPException(status_code=response.status_code, detail="Failed to send whatsapp message")
+#     if(request.modality=="Whatsapp"):
+#       webhook_url = "https://services.leadconnectorhq.com/hooks/HdpmQEFcOyjCw9DFaIyF/webhook-trigger/9a029568-6db2-4a58-a5b5-d6fdd3e26bf8"
+#       response = requests.post(webhook_url, json=post_data)
+#       if response.status_code == 200:
+#         return JSONResponse(content={"status": "whatsapp message sent successfully!"})
+#       else:
+#         raise HTTPException(status_code=response.status_code, detail="Failed to send whatsapp message")
 
 
-    elif(request.modality=="SMS"):
-      webhook_url = "https://services.leadconnectorhq.com/hooks/HdpmQEFcOyjCw9DFaIyF/webhook-trigger/4f73a1ec-239a-499e-849e-44a8a6dd6ded"
-      response = requests.post(webhook_url, json=post_data)
-      if response.status_code == 200:
-        return JSONResponse(content={"status": "sms sent successfully!"})
-      else:
-        raise HTTPException(status_code=response.status_code, detail="Failed to send sms")
+#     elif(request.modality=="SMS"):
+#       webhook_url = "https://services.leadconnectorhq.com/hooks/HdpmQEFcOyjCw9DFaIyF/webhook-trigger/4f73a1ec-239a-499e-849e-44a8a6dd6ded"
+#       response = requests.post(webhook_url, json=post_data)
+#       if response.status_code == 200:
+#         return JSONResponse(content={"status": "sms sent successfully!"})
+#       else:
+#         raise HTTPException(status_code=response.status_code, detail="Failed to send sms")
 
 
 # if __name__ == "__main__":
