@@ -16,7 +16,7 @@ def getChatbotMessage(inputText: str):
   return "I have received your message this features is under build we will reach you soon"
 
 @app.get("/")
-def home():
+async def home():
     return JSONResponse("Object Detection Server Is Running")
 
 @app.post("/message")
