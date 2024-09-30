@@ -38,12 +38,13 @@ async def get_body(request: Request):
 @app.post("/message")
 async def get_message_from_whatsapp_sms(request: MessageRequest):
 
+    sanitized_phone = request.phone.replace(" ", "").replace("-", "")
     chatbot_reply = getChatbotMessage(request.smsBody)
 
     post_data = {
         "firstName": request.firstName,
         "lastName": request.lastName,
-        "phone": request.phone,
+        "phone": sanitized_phone,
         "email": request.email,
         "smsBody": chatbot_reply,
         "sessionId": request.sessionId,
