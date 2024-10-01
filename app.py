@@ -1,4 +1,5 @@
 import requests
+import re
 from fastapi import FastAPI, Request, HTTPException
 from fastapi.responses import JSONResponse
 from fastapi.middleware.cors import CORSMiddleware
@@ -47,7 +48,7 @@ async def get_body(request: Request):
 @app.post("/message")
 async def get_message_from_whatsapp_sms(request: MessageRequest):
 
-    sanitized_phone = request.phone.replace(" ", "").replace("-", "").replace("(", "").replace(")", "")
+    sanitized_phone = re.sub(r'\s+', '', request.phone).replace("-", "").replace("(", "").replace(")", "")
     chatbot_reply = getChatbotMessage(request.smsBody)
 
     post_data = {
@@ -80,7 +81,7 @@ async def get_message_from_whatsapp_sms(request: MessageRequest):
 @app.post("/email")
 async def get_email_message(request: EmailMessageRequest):
 
-    sanitized_phone = request.phone.replace(" ", "").replace("-", "")
+    sanitized_phone = re.sub(r'\s+', '', request.phone).replace("-", "").replace("(", "").replace(")", "")
     chatbot_reply = getChatbotMessage(request.emailBody)
 
     post_data = {
