@@ -48,6 +48,8 @@ async def get_body(request: Request):
 @app.post("/message")
 async def get_message_from_whatsapp_sms(request: MessageRequest):
 
+    print("Received: ",request)
+
     sanitized_phone = re.sub(r'\s+', '', request.phone).replace("-", "").replace("(", "").replace(")", "")
     chatbot_reply = getChatbotMessage(request.smsBody)
 
@@ -60,6 +62,8 @@ async def get_message_from_whatsapp_sms(request: MessageRequest):
         "sessionId": request.sessionId,
         "modality": request.modality,
     }
+
+    print("sending: ",post_data)
 
     if(request.modality=="Whatsapp"):
       webhook_url = "https://services.leadconnectorhq.com/hooks/HdpmQEFcOyjCw9DFaIyF/webhook-trigger/9a029568-6db2-4a58-a5b5-d6fdd3e26bf8"
@@ -81,6 +85,8 @@ async def get_message_from_whatsapp_sms(request: MessageRequest):
 @app.post("/email")
 async def get_email_message(request: EmailMessageRequest):
 
+    print("Received: ",request)
+
     sanitized_phone = re.sub(r'\s+', '', request.phone).replace("-", "").replace("(", "").replace(")", "")
     chatbot_reply = getChatbotMessage(request.emailBody)
 
@@ -93,6 +99,8 @@ async def get_email_message(request: EmailMessageRequest):
         "sessionId": request.sessionId,
         "modality": request.modality,
     }
+
+    print("sending: ",post_data)
 
     webhook_url = "https://services.leadconnectorhq.com/hooks/HdpmQEFcOyjCw9DFaIyF/webhook-trigger/4c5c9280-32eb-45c7-8dc0-e40870005eb6"
     response = requests.post(webhook_url, json=post_data)
