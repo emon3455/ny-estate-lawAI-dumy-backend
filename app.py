@@ -23,6 +23,15 @@ class MessageRequest(BaseModel):
     sessionId: str
     modality: str
 
+class EmailMessageRequest(BaseModel):
+    firstName: str
+    lastName: str
+    email: str
+    phone: str
+    emailBody: str
+    sessionId: str
+    modality: str
+
 def getChatbotMessage(inputText: str):
   return "I have received your message this features is under build we will reach you soon"
 
@@ -38,7 +47,7 @@ async def get_body(request: Request):
 @app.post("/message")
 async def get_message_from_whatsapp_sms(request: MessageRequest):
 
-    sanitized_phone = request.phone.replace(" ", "").replace("-", "")
+    sanitized_phone = request.phone.replace(" ", "").replace("-", "").replace("(", "").replace(")", "")
     chatbot_reply = getChatbotMessage(request.smsBody)
 
     post_data = {
@@ -68,6 +77,28 @@ async def get_message_from_whatsapp_sms(request: MessageRequest):
       else:
         raise HTTPException(status_code=response.status_code, detail="Failed to send sms")
 
+@app.post("/email")
+async def get_email_message(request: EmailMessageRequest):
+
+    sanitized_phone = request.phone.replace(" ", "").replace("-", "")
+    chatbot_reply = getChatbotMessage(request.emailBody)
+
+    post_data = {
+        "firstName": request.firstName,
+        "lastName": request.lastName,
+        "phone": sanitized_phone,
+        "email": request.email,
+        "emailBody": chatbot_reply,
+        "sessionId": request.sessionId,
+        "modality": request.modality,
+    }
+
+    webhook_url = "https://services.leadconnectorhq.com/hooks/HdpmQEFcOyjCw9DFaIyF/webhook-trigger/4c5c9280-32eb-45c7-8dc0-e40870005eb6"
+    response = requests.post(webhook_url, json=post_data)
+    if response.status_code == 200:
+        return JSONResponse(content={"status": "Email sent successfully!"})
+    else:
+        raise HTTPException(status_code=response.status_code, detail="Failed to send Email")
 
 # if __name__ == "__main__":
 #     import uvicorn
