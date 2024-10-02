@@ -75,7 +75,7 @@ async def get_message_from_whatsapp_sms(request: MessageRequest):
 
 
     elif(request.modality=="SMS"):
-      webhook_url = "https://services.leadconnectorhq.com/hooks/HdpmQEFcOyjCw9DFaIyF/webhook-trigger/4f73a1ec-239a-499e-849e-44a8a6dd6ded"
+      webhook_url = "https://services.leadconnectorhq.com/hooks/HdpmQEFcOyjCw9DFaIyF/webhook-trigger/A9F1paAfIfk1VPuhtBVN"
       response = requests.post(webhook_url, json=post_data)
       if response.status_code == 200:
         return JSONResponse(content={"status": "sms sent successfully!"})
