@@ -102,7 +102,7 @@ async def get_email_message(request: EmailMessageRequest):
 
     print("sending: ",post_data)
 
-    webhook_url = "https://services.leadconnectorhq.com/hooks/HdpmQEFcOyjCw9DFaIyF/webhook-trigger/4c5c9280-32eb-45c7-8dc0-e40870005eb6"
+    webhook_url = "https://services.leadconnectorhq.com/hooks/HdpmQEFcOyjCw9DFaIyF/webhook-trigger/lvx2OouLbVbxg28MkFRB"
     response = requests.post(webhook_url, json=post_data)
     if response.status_code == 200:
         return JSONResponse(content={"status": "Email sent successfully!"})
